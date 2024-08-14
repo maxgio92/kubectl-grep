@@ -1,9 +1,9 @@
-# krep
+# kubectl-grep
 
 ## Usage
 
 ```shell
-krep NAME [TYPE]
+kubectl grep NAME [TYPE]
 
 DESCRIPTION
 	krep for specific patterns in Kubernetes object NAME and TYPE, and krep prints each lines that match the pattern.
