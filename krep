@@ -1,29 +1,11 @@
 #!/usr/bin/env bash
 
-set -uo pipefail
-
-get_all() {
-	echo; echo pods
-	kubectl get pods -A | grep -i $1
-	echo; echo deployments
-	kubectl get deploy -A | grep -i $1
-	echo; echo statefulsets
-	kubectl get sts -A | grep -i $1
-	echo; echo daemonsets
-	kubectl get ds -A | grep -i $1
-	echo; echo services
-	kubectl get svc -A | grep -i $1
-}
+set -o pipefail
 
 main() {
 	if [ -z "${1}" ]; then
 		echo "resource name is missing"
 		exit 1
-	fi
-
-	if [ -z "${2}" ]; then
-		get_all "{$1}"
-		exit 0
 	fi
 
 	for r in $(kubectl api-resources | grep -i "${2}" | cut -d ' ' -f1)
