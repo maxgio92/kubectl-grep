@@ -3,16 +3,19 @@
 set -o pipefail
 
 main() {
-	if [ -z "${1}" ]; then
-		echo "resource name is missing"
-		exit 1
-	fi
+        if [ -z "${1}" ]; then
+                echo "resource name is missing"
+                exit 1
+        fi
 
-	for r in $(kubectl api-resources | grep -i "${2}" | cut -d ' ' -f1)
-	do
-		echo; echo "${r}"
-		kubectl get "${r}" -A 2>/dev/null | grep -i "${1}"
-	done
+        for r in $(kubectl api-resources | grep -i "${2}" | cut -d ' ' -f1)
+        do
+                res=$(kubectl get "${r}" -A 2>/dev/null | grep -i "${1}")
+                if ! [ -z "${res}" ]; then
+                        echo; echo "${r}"
+                        echo "${res}"
+                fi
+        done
 }
 
 main $@
