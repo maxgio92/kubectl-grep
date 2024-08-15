@@ -8,7 +8,7 @@ main() {
                 exit 1
         fi
 
-        for r in $(kubectl api-resources | grep -i "${2}" | cut -d ' ' -f1)
+        for r in $(kubectl api-resources -o name | grep -i "${2}" | grep -vE "^events$" )
         do
                 res=$(kubectl get "${r}" -A 2>/dev/null | grep -i "${1}")
                 if ! [ -z "${res}" ]; then
